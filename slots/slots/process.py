@@ -84,7 +84,7 @@ def validate_numeric_entity(values: List[Dict], invalid_trigger: str = None, key
 
     for val in values:
         x = val['value']
-        if eval(constraint):
+        if eval(constraint.replace(var_name,str(val['value']))):
             jsonresp['filled'] = True
             jsonresp['partially_filled'] = False
             age_stated.append(x)
@@ -98,7 +98,7 @@ def validate_numeric_entity(values: List[Dict], invalid_trigger: str = None, key
 
     if len(age_stated) == 0:
         del jsonresp['parameters']['age_stated']
-        
+
     if jsonresp['partially_filled']:
         jsonresp['trigger'] = invalid_trigger
     else:
