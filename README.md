@@ -1,4 +1,17 @@
 # slot_validation
+Django REST Api to validate slot values.
+
+# Running locally
+- Make sure to have python 3.6 version installed along with latest pip version.
+- Run `pip3 install -r req.txt` to install the dependencies.
+- Run `python3 manage.py runserver 0.0.0.0:8000` to start the server
+- Server will run on port `8000`
+
+# Running it using docker
+- `docker build -t <tagname of your choice> . `
+- `docker run -p 8000:8000 -it <tagname>`
+- Server will run on port `8000` , use the apis below to test the same
+- Docker image size is `173 MB`
 
 # API's
 ## To validate a slot with a finite set of values.
