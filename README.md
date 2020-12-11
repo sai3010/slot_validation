@@ -39,3 +39,33 @@ curl --location --request POST 'http://localhost:8000/slot_values' \
   ]
 }'
 ```
+
+## API to validate a slot with a numeric value extracted and constraints on the value extracted.
+
+```bash
+curl --location --request POST 'http://localhost:8000/slot_numeric' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "invalid_trigger": "invalid_age",
+  "key": "age_stated",
+  "name": "age",
+  "support_multiple": true,
+  "reuse": true,
+  "pick_first": true,
+  "type": [
+    "number"
+  ],
+  "validation_parser": "numeric_values_entity",
+  "constraint": "x>=18 and x<=30",
+  "var_name": "x",
+  "values": [
+    {
+      "entity_type": "number",
+      "value": 20
+    }, {
+      "entity_type": "number",
+      "value": -2
+    }
+  ]
+}'
+```

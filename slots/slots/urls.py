@@ -18,5 +18,6 @@ from django.urls import path
 from .views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('slot_values', slot_values)
+    path('slot_values', slot_values),
+    path('slot_numeric', slot_numeric)
 ]
