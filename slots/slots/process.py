@@ -38,9 +38,10 @@ def validate_finite_values_entity(values: List[Dict], supported_values: List[str
         jsonresp['parameters']['ids_stated'] = ','.join(ids)
     else:
         jsonresp['parameters']['ids_stated'] = ids
-
-    if not jsonresp['filled']:
-        del jsonresp['parameters']['ids_stated']
+        
+    if not support_multiple:
+        if not jsonresp['filled']:
+            del jsonresp['parameters']['ids_stated']
 
     if jsonresp['partially_filled']:
         jsonresp['trigger'] = invalid_trigger
