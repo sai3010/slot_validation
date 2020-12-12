@@ -100,7 +100,12 @@ def validate_numeric_entity(values: List[Dict], invalid_trigger: str = None, key
     if not support_multiple:
         if len(age_stated) == 0:
             del jsonresp['parameters'][key]
-
+    else:
+        if type(jsonresp['parameters'][key]) == str:
+            jsonresp['parameters'][key] = jsonresp['parameters'][key].split(",")[0]
+        else:
+            jsonresp['parameters'][key] = age_stated[0]
+            
     if jsonresp['partially_filled']:
         jsonresp['trigger'] = invalid_trigger
     else:
