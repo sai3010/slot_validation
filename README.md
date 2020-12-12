@@ -13,9 +13,31 @@ Django REST Api to validate slot values.
 - Server will run on port `8000` , use the apis below to test the same
 - Docker image size is `173 MB`
 
+# Assumptions
+### In Api `/slot_values` (To validate a slot with a finite set of values.)
+- `pick_first` & `support_multiple` is contradicting when both are true , hence priority is given to `pick_first`. So if both are set to True in the sample request, the `ids_stated` in params will be a string instead of a list.
+- When subset of values are valid and `support_multiple` is true the `ids_stated` is a list of supported IDs returned, otherwise `parameters` is a empty dictionary. | **Note : `pick_first` is given priority here as well.** |
+
+### In Api `/slot_numeric` (To validate a slot with a numeric value extracted and constraints on the value extracted.)
+- `pick_first` & `support_multiple` is contradicting when both are true , hence priority is given to `pick_first`. So if both are set to True in the sample request, the `ids_stated` in params will be a string instead of a list.
+- If all are valid sending only the first element that has satisfied the constraint as per the example testcase stated below :
+```
+[                              | true,                  |
+|   {                          | false,                 |
+|     "entity_type": "number", | "",                    |
+|     "value": 24              | {'age_stated': 24}     |
+|   },                         |                        |
+|   {                          |                        |
+|     "entity_type": "number", |                        |
+|     "value": 22              |                        |
+|   }                          |                        |
+| ]                            |   
+```
+even though both 24 and 22 are valid numbers , only 24 is returned assuming that it is the first value validated.
+- If `support_multiple` is true all values satisfying the constraint are returned, Otherwise only the first element that has satisfied the constraint is returned.
+
 # API's
 ## To validate a slot with a finite set of values.
-
 ```bash
 curl --location --request POST 'http://localhost:8000/slot_values' \
 --header 'Content-Type: application/json' \
@@ -53,7 +75,7 @@ curl --location --request POST 'http://localhost:8000/slot_values' \
 }'
 ```
 
-## API to validate a slot with a numeric value extracted and constraints on the value extracted.
+## To validate a slot with a numeric value extracted and constraints on the value extracted.
 
 ```bash
 curl --location --request POST 'http://localhost:8000/slot_numeric' \
