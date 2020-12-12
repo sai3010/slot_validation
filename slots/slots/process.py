@@ -93,12 +93,12 @@ def validate_numeric_entity(values: List[Dict], invalid_trigger: str = None, key
             jsonresp['filled'] = False
             jsonresp['partially_filled'] = True
     if pick_first:
-        jsonresp['parameters']['age_stated'] = map(str, age_stated)  
+        jsonresp['parameters'][key] = str(",".join(map(str, age_stated))) 
     else:
-        jsonresp['parameters']['age_stated'] = age_stated
+        jsonresp['parameters'][key] = age_stated
 
     if len(age_stated) == 0:
-        del jsonresp['parameters']['age_stated']
+        del jsonresp['parameters'][key]
 
     if jsonresp['partially_filled']:
         jsonresp['trigger'] = invalid_trigger
